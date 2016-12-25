@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Course homepage for CS 489 Big Data Infrastructure (Winter 2017) at the University of Waterloo">
+    <meta name="author" content="Jimmy Lin">
+    <title>Big Data Infrastructure</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="organization.html">Organization</a></li>
+            <li><a href="syllabus.html">Syllabus</a></li>
+            <li><a href="assignments.html">Assignments</a></li>
+            <li class="active"><a href="software.html">Software</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+  <div class="page-header">
+    <div style="float: right"/><img src="images/waterloo_logo.png"/></div>
+    <h1>Software <small>CS 489/698 Big Data Infrastructure (Winter 2017)</small></h1>
+  </div>
+
+<div>
+<h3>Bespin</h3>
+
+<p><a href="http://bespin.io">Bespin</a> is a software library that
+contains reference implementations of "big data" algorithms in
+MapReduce and Spark. It provides sample code for many of the
+algorithms we'll be discussing in class and also provides starting
+points for the assignments.</p>
+
+<h3>Linux Student CS Environment</h3>
+
+<p>Software needed for the course can be found in
+the <code>linux.student.cs.uwaterloo.ca</code> environment. We will
+ensure that everything works correctly in this environment.</p>
+
+<p><b>TL;DR.</b> Just set up your environment as follows (in bash; adapt accordingly for your shell of choice):</p>
+
+<pre>
+export PATH=/u0/cs489/packages/spark/bin:/u0/cs489/packages/hadoop/bin:/u0/cs489/packages/maven/bin:/u0/cs489/packages/scala/bin:$PATH
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+</pre>
+
+<p>You'll want to add the above lines to your shell config file,
+i.e., <code>.bashrc</code>, <code>.bash_profile</code>, etc.</p>
+
+<p><b>Gory Details.</b> For the course we need Java, Scala, Hadoop,
+Spark, and Maven. Java is already available in the default user
+environment. The rest of the packages are installed
+in <code>/u0/cs489/packages/</code>. The
+directories <code>scala</code>, <code>hadoop</code>, <code>spark</code>,
+and <code>maven</code> are actually symlinks to specific
+versions. This is so that we can transparently change the links to
+point to different versions if necessary without affecting downstream
+users. Currently, the versions are:</p>
+
+<ul>
+  <li>Java: OpenJDK 1.8.0_91</li>
+  <li>Scala: 2.11.8</li>
+  <li>Hadoop: 2.7.2</li>
+  <li>Spark: 2.0.2</li>
+  <li>Maven: 3.3.9</li>
+</ul>
+
+</div>
+
+<div>
+<h3>Installing Software Locally</h3>
+
+<p>You may wish to install all necessary software packages locally on
+your own machine. This page provides basic installation instructions,
+but course staff cannot provide technical support due to the size of
+the class and the idiosyncrasies of individual systems. We will be
+responsible for making sure everything works properly in the Linux
+Student CS Environment, but if you want to install everything on your
+own machine for convenience, you're on your own.</p>
+
+<p>Both Hadoop and Spark work fine on Mac OS X and Linux, but may be
+difficult to get working on Windows. Note that to run Hadoop and Spark
+on your local machine comfortably, you'll need at least 4 GB memory
+and plenty of disk space (10s of GB at least).</p>
+
+<p>You'll also need Java (JDK 1.8), Scala (use Scala 2.11.x), and
+Maven (any reasonably recent version).</p>
+
+<p>The versions of the packages installed
+on <code>linux.student.cs.uwaterloo.ca</code> are as follows:</p>
+
+<ul>
+
+ <li><a href="http://www-us.apache.org/dist/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz">Hadoop 2.7.2</a></li>
+ <li><a href="http://d3kbcqa49mib13.cloudfront.net/spark-2.0.2-bin-hadoop2.7.tgz">Spark 2.0.2</a></lit>
+
+</ul>
+
+<p>Download the above packages, unpack the tarball, add their
+respective <code>bin/</code> directories to your path (and your shell
+config), and you should be go to go.</p>
+
+<p>Alternatively, you can also install the various packages using a
+package manager, e.g., <code>apt-get</code>, MacPorts, etc. However,
+make sure you get the right version.</p>
+
+</div>
+
+
+<p style="padding-top:100px" />
+
+    </div><!-- /.container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+
+</html>
