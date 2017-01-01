@@ -68,7 +68,8 @@
 contains reference implementations of "big data" algorithms in
 MapReduce and Spark. It provides sample code for many of the
 algorithms we'll be discussing in class and also provides starting
-points for the assignments.</p>
+points for the assignments. You'll want to familiarize yourself
+with the library.</p>
 
 <h3>Linux Student CS Environment</h3>
 
@@ -83,8 +84,8 @@ export PATH=/u0/cs489/packages/spark/bin:/u0/cs489/packages/hadoop/bin:/u0/cs489
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 </pre>
 
-<p>You'll want to add the above lines to your shell config file,
-i.e., <code>.bashrc</code>, <code>.bash_profile</code>, etc.</p>
+<p>You'll want to add the above lines to your shell config file (e.g.,
+<code>.bash_profile</code>).</p>
 
 <p><b>Gory Details.</b> For the course we need Java, Scala, Hadoop,
 Spark, and Maven. Java is already available in the default user
@@ -110,17 +111,17 @@ users. Currently, the versions are:</p>
 <h3>Installing Software Locally</h3>
 
 <p>You may wish to install all necessary software packages locally on
-your own machine. This page provides basic installation instructions,
-but course staff cannot provide technical support due to the size of
+your own machine. We provide basic installation instructions here,
+but the course staff cannot provide technical support due to the size of
 the class and the idiosyncrasies of individual systems. We will be
 responsible for making sure everything works properly in the Linux
-Student CS Environment, but if you want to install everything on your
+Student CS Environment (above), but if you want to install everything on your
 own machine for convenience, you're on your own.</p>
 
 <p>Both Hadoop and Spark work fine on Mac OS X and Linux, but may be
 difficult to get working on Windows. Note that to run Hadoop and Spark
 on your local machine comfortably, you'll need at least 4 GB memory
-and plenty of disk space (10s of GB at least).</p>
+and plenty of disk space (10 GB should do it).</p>
 
 <p>You'll also need Java (JDK 1.8), Scala (use Scala 2.11.x), and
 Maven (any reasonably recent version).</p>
@@ -142,6 +143,73 @@ config), and you should be go to go.</p>
 <p>Alternatively, you can also install the various packages using a
 package manager, e.g., <code>apt-get</code>, MacPorts, etc. However,
 make sure you get the right version.</p>
+
+</div>
+
+<div>
+<h3>Altiscale Cluster</h3>
+
+<div style="float:right; padding-left:25px"/><img src="images/altiscale-logo.png"/></div>
+
+<p>In addition to running "toy" Hadoop on a single machine (which
+obviously defeats the point of a distributed framework), we're going
+to be playing with a modest cluster thanks to the generous support of
+Altiscale, which is a "Hadoop-as-a-service" provider. You'll be
+getting an email directly from Altiscale with account information.</p>
+
+<p>Follow the instructions from the email:</p>
+
+<ol>
+
+<li>Set up your web profile at <a href="http://portal.altiscale.com/">Altiscale Portal</a>.</li>
+
+<li>Follow these instructions to upload your ssh keys: <a href="https://documentation.altiscale.com/uploading-public-key">Uploading and Managing Your Public Key</a></li>
+
+<li>Follow these instructions to ssh into the "workspace": <a href="https://documentation.altiscale.com/connecting-with-ssh">Connecting to the Workbench Using SSH</a>. The workspace is the node from which you submit MapReduce/Spark jobs; it's also where you'll check out code, inspect HDFS data, etc. In class I sometimes refer to this as the "submit node".</li>
+
+<li>Follow these instructions to access the cluster webapps: <a href="https://documentation.altiscale.com/accessing-web-uis-socks">Accessing Web UIs Through a SOCKS Proxy</a>. In particular, you'll need to access the Resource Manager webapp to examine the status of your running jobs at <a href="http://rm-ia.s3s.altiscale.com:8088/cluster/"><code>http://rm-ia.s3s.altiscale.com:8088/cluster/</code></a>.</p>
+</li>
+
+</ol>
+
+<p><b>The TL;DR version.</b> Configure your <code>~/.ssh/config file</code> as follows:</p>
+
+<pre>
+Host altiscale
+User YOUR_USERNAME
+Hostname waterloo.z43.altiscale.com
+Port 1656
+IdentityFile ~/.ssh/id_rsa
+Compression yes
+ServerAliveInterval 15
+DynamicForward localhost:1080
+TCPKeepAlive yes
+Protocol 2,1
+</pre>
+
+<p>And you should be able to ssh into the workspace:</p>
+
+<pre>
+ssh altiscale
+</pre>
+
+<p>That should do it!</p>
+
+<p><b>Running Spark on Altiscale.</b> To simplify the process of
+running Spark, we have created <code>spark-submit</code> script that
+replaces the one that comes to Spark, located
+at <code>/home/cs489/bin/spark-submit</code>. To use it, tweak the
+following line in your <code>.bash_profile</code>:</p>
+
+<pre>
+PATH=$PATH:$HOME/bin:/home/cs489/bin/
+</pre>
+
+<p>In a bit more detail, the script prepends a number of boilerplate
+command-line arguments before passing on to the
+"real" <code>spark-submit</code>. For more details, consult the
+<a href="https://documentation.altiscale.com/spark-2-0-with-altiscale">Altiscale
+Spark documentation</a>.</p>
 
 </div>
 
