@@ -348,7 +348,14 @@ will be doing the grading. "But it runs on my laptop!" will not be
 accepted as an excuse if we can't get your code to run.</p>
 
 <p>You can run the above instructions using
-<a href="assignments/check_assignment1_public_linux.py"><code>check_assignment1_public_linux.py</code></a>.</p>
+<a href="assignments/check_assignment1_public_linux.py"><code>check_assignment1_public_linux.py</code></a>,
+with something like:</p>
+
+<pre>
+$ wget http://lintool.github.io/bigdata-2017w/assignments/check_assignment1_public_linux.py
+$ chmod +x check_assignment1_public_linux.py
+$ ./check_assignment1_public_linux.py lintool
+</pre>
 
 <p>We're going to run your code on the Altiscale cluster as
 follows:</p>
@@ -366,7 +373,14 @@ $ hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
 </pre>
 
 <p>You can run the above instructions using
-<a href="assignments/check_assignment1_public_altiscale.py"><code>check_assignment1_public_altiscale.py</code></a>.</p>
+<a href="assignments/check_assignment1_public_altiscale.py"><code>check_assignment1_public_altiscale.py</code></a>,
+with something like:</p>
+
+<pre>
+$ wget http://lintool.github.io/bigdata-2017w/assignments/check_assignment1_public_altiscale.py
+$ chmod +x check_assignment1_public_altiscale.py
+$ ./check_assignment1_public_altiscale.py lintool
+</pre>
 
 <p><b>Important:</b> Make sure that your code accepts the command-line
 parameters above! That is, make sure the check scripts work!<p>
@@ -391,6 +405,10 @@ committed and pushed to origin before the deadline.</p>
   <li>Your solution will likely require more than one MapReduce job.</li>
 
   <li>You may have to load in "side data"?</li>
+
+  <li>See <a href="https://github.com/lintool/bespin/blob/master/src/main/java/io/bespin/java/mapreduce/cooccur/ComputeCooccurrenceMatrixPairs.java">this example</a> for how to pass in a command-line argument.</li>
+
+  <li>Counters may be useful for... well, counting.</li>
 
   <li>My <a href="https://github.com/lintool/tools/tree/master/lintools-datatypes/">lintools-datatypes
   package</a> has <code>Writable</code> datatypes that you might find
