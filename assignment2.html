@@ -78,8 +78,167 @@
 
 <section style="padding-top:0px">
 <div>
-<h3>Assignment 2</h3>
 
+<h3>Assignment 2: Counting in Spark <small>due 1:00pm January 26</small></h3>
+
+<p>In this assignment you will "port" the MapReduce implementations of
+the bigram frequency count program
+from <a href="http://bespin.io">Bespin</a> over to Spark (in
+Scala). Your starting points
+are <code>ComputeBigramRelativeFrequencyPairs</code>
+and <code>ComputeBigramRelativeFrequencyStripes</code> in
+package <code>io.bespin.java.mapreduce.bigram</code> (in Java).
+You are welcome to build on the <code>BigramCount</code> (Scala)
+implementation <a href="https://github.com/lintool/bespin/blob/master/src/main/scala/io/bespin/scala/spark/bigram/BigramCount.scala">here</a>
+for tokenization and "boilerplate" code like command-line argument
+parsing. To be consistent in tokenization, you should copy over
+the <code>Tokenizer</code> trait
+<a href="https://github.com/lintool/bespin/blob/master/src/main/scala/io/bespin/scala/util/Tokenizer.scala">here</a>.</p>
+
+<p>Put your code in the
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>. Since
+you'll be writing Scala code, your source files should go
+into <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>. Note
+that the repository is designed so that Scala/Spark code will also
+compile with the same Maven build command:</p>
+
+<pre>
+$ mvn clean package
+</pre>
+
+<p>Following the Java implementations, you will write both a "pairs"
+and a "stripes" implementation in Spark. Not that although Spark has a
+different API than MapReduce, the algorithmic concepts are still very
+much applicable. Your pairs and stripes implementation should follow
+the same logic as in the MapReduce implementations. In particular,
+your program should only take one pass through the input data.</p>
+
+<p>Make sure your implementation runs in the Linux student CS
+environment on the Shakespeare collection and also on sample Wikipedia
+file <code>/shared/cs489/data/enwiki-20161220-sentences-0.1sample.txt</code>
+on HDFS in the Altiscale cluster. See
+the <a href="software.html">software page</a> for how to set up the
+Spark environment on Altiscale.</p>
+
+<p>You can verify the correctness of your algoritm by comparing the
+output of the MapReduce implementation with your Spark
+implementation. The output should be the same.</p>
+
+<p>Clarification on terminology: informally, we often refer to
+"mappers" and "reducers" in the context of Spark. That's a shorthand
+way of saying map-like transformations
+(<code>map</code>, <code>flatMap</code>, <code>filter</code>, <code>mapPartitions</code>,
+etc.) and reduce-like transformations
+(e.g., <code>reduceByKey</code>, <code>groupByKey</code>, <code>aggregateByKey</code>,
+etc.). Hopefully it's clear from lecture that while Spark represents a
+generalization of MapReduce, the notions of per-record processing
+(i.e., map-like transformation) and grouping/shuffling (i.e.,
+reduce-like transformations) are shared across both frameworks.</p>
+
+<h4 style="padding-top: 10px">Turning in the Assignment</h4>
+
+<p>Please follow these instructions carefully!</p>
+
+<p>The pairs and stripes implementation should be in
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>;
+your Scala code should be
+in <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>.
+There are no questions to answer in this assignment unless there is
+something you would like to communicate with us, and if so, put it
+in <code>assignment2.md</code>.</p>
+
+<p>When grading, we will pull your repo and build your code:<p>
+
+<pre>
+$ mvn clean package
+</pre>
+
+<p>Your code should build successfully. We are then going to check
+your code (both the pairs and stripes implementations).</p>
+
+<p>We are going to run your code on the Linux student CS environment
+as follows (we will make sure the collection is there):</p>
+
+<pre>
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyPairs \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
+   --output cs489-2017w-lintool-a2-shakespeare-pairs --reducers 5
+
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyStripes \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
+   --output cs489-2017w-lintool-a2-shakespeare-stripes --reducers 5
+</pre>
+
+<p>Make sure that your code runs in the Linux Student CS environment
+(even if you do development on your own machine), which is where we
+will be doing the grading. "But it runs on my laptop!" will not be
+accepted as an excuse if we can't get your code to run.</p>
+
+<p>We are going to run your code on the Altiscale cluster as follows
+(note the addition of the <code>--num-executors</code>
+and <code>--executor-cores</code> options):</p>
+
+<pre>
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyPairs \
+   --num-executors 7 --executor-cores 2 target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+   --input /shared/cs489/data/enwiki-20161220-sentences-0.1sample.txt \
+   --output cs489-2017w-lintool-a2-wiki-pairs --reducers 14
+
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyStripes \
+   --num-executors 7 --executor-cores 2 --executor-memory 4G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+   --input /shared/cs489/data/enwiki-20161220-sentences-0.1sample.txt \
+   --output cs489-2017w-lintool-a2-wiki-stripes --reducers 14
+</pre>
+
+<p><b>Important:</b> Make sure that your code accepts the command-line
+parameters above!<p>
+
+<p>When you run a Spark job, you need to specify how much cluster
+resource to request. The option <code>--num-executors</code> specifies
+the number of executors, each with a certain number of cores specified
+by <code>--executor-cores</code>. So, in the above commands, we
+request a total of 14 workers (7 executors, 2 cores each).</p>
+
+<p>The <code>--reducers</code> flag is the amount of parallelism that
+you set in your program in the reduce stage. If the total number of
+workers is larger than <code>--reducers</code>, some of the workers
+will be sitting idle, since you've allocated more workers for the job
+than the parallelism you've specified in your
+program. If <code>--reducers</code> is larger than the number of
+workers, on the other hand, then your reduce tasks will queue up at
+the workers, i.e., a worker will be assigned more than one reduce
+task. In the above example we set the two equal.</p>
+
+<p>Note that the setting of these two parameters should not affect the
+correctness of your program. The setting above is a reasonable middle
+ground between having your jobs finish in a reasonable amount of time
+and not monopolizing cluster resources.</p>
+
+<p>A related but still orthogonal concept is partitions. Partitions
+describes the physical division of records across workers during
+execution. When reading from HDFS, the number of HDFS blocks
+determines the number of partitions in your RDD. When you apply a
+reduce-like transformation, you can optionally specify the number of
+partitions (or Spark applies a default) &mdash; in this case, the
+number of partitions is equal to the number of reducers.</p>
+
+<p>When you've done everything, commit to your repo and remember to
+push back to origin. You should be able to see your edits in the web
+interface. Before you consider the assignment "complete", we would
+recommend that you verify everything above works by performing a clean
+clone of your repo and going through the steps above.</p>
+
+<p>That's it!</p>
+
+<h4 style="padding-top: 10px">Grading</h4>
+
+<p>This assignment is worth a total of 24 points, broken down as
+follows:</p>
+
+<ul>
+  <li>The pairs implementation running locally is worth 6 points; the stripes implementation running locally is worth another 6 points.</li>
+  <li>The pairs implementation running on Altiscale is worth 6 points; the stripes implementation running on Altiscale is worth another 6 points.</li>
+</ul>
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
 </div>
