@@ -19,9 +19,9 @@ def check_a0(u):
   call(["hadoop", "jar", "target/bigdata2017w-0.1.0-SNAPSHOT.jar",
         "ca.uwaterloo.cs.bigdata2017w.assignment0.PerfectX",
         "-input", "data/Shakespeare.txt",
-        "-output", "cs489-2016w-"+u+"-a0-shakespeare" ])
+        "-output", "cs489-2017w-"+u+"-a0-shakespeare" ])
   print("Question 1.")
-  call("hadoop fs -cat cs489-2016w-"+u+"-a0-shakespeare/part-r-00000 | sort -k 2 -n -r | head -1",shell=True)
+  call("hadoop fs -cat cs489-2017w-"+u+"-a0-shakespeare/part-r-00000 | sort -k 2 -n -r | head -1",shell=True)
 
 if __name__ == "__main__":
   try:
