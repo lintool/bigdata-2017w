@@ -159,33 +159,8 @@ log base 10.</li>
 
 </ul>
 
-<p>Just to make sure we're all on the same page, use this as the
-starting point of your mapper:</p>
-
-<pre>
-    @Override
-    public void map(LongWritable key, Text value, Context context)
-        throws IOException, InterruptedException {
-      String line = value.toString();
-      StringTokenizer itr = new StringTokenizer(line);
-
-      int cnt = 0;
-      Set&lt;String&gt; set = new HashSet&lt;&gt;();
-      while (itr.hasMoreTokens()) {
-        String w = itr.nextToken().toLowerCase().replaceAll("(^[^a-z]+|[^a-z]+$)", "");
-        if (w.length() == 0) continue;
-        cnt++;
-        set.add(w);
-        if (cnt >= 40) break;
-      }
-
-      String[] words = new String[set.size()];
-      words = set.toArray(words);
-
-      // Your code goes here...
-    }
-  }
-</pre>
+<p>To ensure consistent tokenization, use the Tokenizer class provided
+in Bespin that you've used for assignment 0.</p>
 
 <p>You will build two versions of the program (put both in
 package <code>ca.uwaterloo.cs.bigdata2017w.assignment1</code>):</p>
@@ -264,7 +239,7 @@ implementation on the sample Wikipedia collection stored on HDFS
 at <code>/shared/cs489/data/simplewiki-20161220-sentences.txt</code>. This
 is a recent dump
 of <a href="https://simple.wikipedia.org/wiki/Main_Page">"simple"
-Wikipedia</a> that has been tokenized into sentence, one per line. As
+Wikipedia</a> that has been tokenized into sentences, one per line. As
 with the Shakespeare collection, we care about co-occurrence on a line
 (which is a sentence in this case).</p>
 
