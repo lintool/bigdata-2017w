@@ -19,11 +19,11 @@ def check_a1(u):
 
   call([ "hadoop","jar","target/bigdata2017w-0.1.0-SNAPSHOT.jar",
          "ca.uwaterloo.cs.bigdata2017w.assignment1.PairsPMI",
-         "-input", "/shared/cs489/data/simplewiki-20161220-sentences.txt", 
+         "-input", "/shared/cs489/data/simplewiki-20161220-sentences.txt",
          "-output", "cs489-2017w-"+u+"-a1-wiki-pairs", "-reducers", "5", "-threshold", "50"])
   call([ "hadoop","jar","target/bigdata2017w-0.1.0-SNAPSHOT.jar",
          "ca.uwaterloo.cs.bigdata2017w.assignment1.StripesPMI",
-         "-input", "/shared/cs489/data/enwiki-20151201-pages-articles-0.1sample.txt", 
+         "-input", "/shared/cs489/data/simplewiki-20161220-sentences.txt",
          "-output", "cs489-2017w-"+u+"-a1-wiki-stripes", "-reducers", "5", "-threshold", "50"])
   print("\n\nQuestion 7.")
   call("hadoop fs -cat cs489-2017w-"+u+"-a1-wiki-pairs/part-r-0000* | grep '(hockey,' | sort -t'(' -k 3 -n -r | head -5",shell=True)
