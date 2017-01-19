@@ -81,10 +81,22 @@
 
 <h3>Assignment 2: Counting in Spark <small>due 1:00pm January 26</small></h3>
 
-<p>In this assignment you will "port" the MapReduce implementations of
-the bigram frequency count program
-from <a href="http://bespin.io">Bespin</a> over to Spark (in
-Scala). Your starting points
+<p>In this assignment you will do two things:</p>
+
+<ol>
+
+<li>"Port" the MapReduce implementations of the bigram frequency count
+program from <a href="http://bespin.io">Bespin</a> over to Spark (in
+Scala).</li>
+
+<li>"Port" the MapReduce implementations
+of <a href="assignment1.html">assignment 1</a> over to Spark (in Scala).</li>
+
+</ol>
+
+<h4 style="padding-top: 10px">Bigram Relative Frequency</h4>
+
+<p>Your starting points
 are <code>ComputeBigramRelativeFrequencyPairs</code>
 and <code>ComputeBigramRelativeFrequencyStripes</code> in
 package <code>io.bespin.java.mapreduce.bigram</code> (in Java).
@@ -98,8 +110,8 @@ the <code>Tokenizer</code> trait
 <p>Put your code in the
 package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>. Since
 you'll be writing Scala code, your source files should go
-into <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>. Note
-that the repository is designed so that Scala/Spark code will also
+into <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>.
+The repository is designed so that Scala/Spark code will also
 compile with the same Maven build command:</p>
 
 <pre>
@@ -120,9 +132,9 @@ on HDFS in the Altiscale cluster. See
 the <a href="software.html">software page</a> for how to set up the
 Spark environment on Altiscale.</p>
 
-<p>You can verify the correctness of your algoritm by comparing the
+<p>You can verify the correctness of your algorithm by comparing the
 output of the MapReduce implementation with your Spark
-implementation. The output should be the same.</p>
+implementation.</p>
 
 <p>Clarification on terminology: informally, we often refer to
 "mappers" and "reducers" in the context of Spark. That's a shorthand
@@ -135,44 +147,18 @@ generalization of MapReduce, the notions of per-record processing
 (i.e., map-like transformation) and grouping/shuffling (i.e.,
 reduce-like transformations) are shared across both frameworks.</p>
 
-<h4 style="padding-top: 10px">Turning in the Assignment</h4>
-
-<p>Please follow these instructions carefully!</p>
-
-<p>The pairs and stripes implementation should be in
-package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>;
-your Scala code should be
-in <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>.
-There are no questions to answer in this assignment unless there is
-something you would like to communicate with us, and if so, put it
-in <code>assignment2.md</code>.</p>
-
-<p>When grading, we will pull your repo and build your code:<p>
-
-<pre>
-$ mvn clean package
-</pre>
-
-<p>Your code should build successfully. We are then going to check
-your code (both the pairs and stripes implementations).</p>
-
-<p>We are going to run your code on the Linux student CS environment
+<p>We are going to run your code in the Linux student CS environment
 as follows (we will make sure the collection is there):</p>
 
 <pre>
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyPairs \
    target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
-   --output cs489-2017w-lintool-a2-shakespeare-pairs --reducers 5
+   --output cs489-2017w-lintool-a2-shakespeare-bigrams-pairs --reducers 5
 
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyStripes \
    target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
-   --output cs489-2017w-lintool-a2-shakespeare-stripes --reducers 5
+   --output cs489-2017w-lintool-a2-shakespeare-bigrams-stripes --reducers 5
 </pre>
-
-<p>Make sure that your code runs in the Linux Student CS environment
-(even if you do development on your own machine), which is where we
-will be doing the grading. "But it runs on my laptop!" will not be
-accepted as an excuse if we can't get your code to run.</p>
 
 <p>We are going to run your code on the Altiscale cluster as follows
 (note the addition of the <code>--num-executors</code>
@@ -180,20 +166,20 @@ and <code>--executor-cores</code> options):</p>
 
 <pre>
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyPairs \
-   --num-executors 7 --executor-cores 2 target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+   --num-executors 7 --executor-cores 2 --executor-memory 4G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
    --input /shared/cs489/data/enwiki-20161220-sentences-0.1sample.txt \
-   --output cs489-2017w-lintool-a2-wiki-pairs --reducers 14
+   --output cs489-2017w-lintool-a2-wiki-bigram-pairs --reducers 14
 
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRelativeFrequencyStripes \
    --num-executors 7 --executor-cores 2 --executor-memory 4G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
    --input /shared/cs489/data/enwiki-20161220-sentences-0.1sample.txt \
-   --output cs489-2017w-lintool-a2-wiki-stripes --reducers 14
+   --output cs489-2017w-lintool-a2-wiki-bigram-stripes --reducers 14
 </pre>
 
 <p><b>Important:</b> Make sure that your code accepts the command-line
 parameters above!<p>
 
-<p>When you run a Spark job, you need to specify how much cluster
+<p>When you run a Spark job (in distributed mode), you need to specify how much cluster
 resource to request. The option <code>--num-executors</code> specifies
 the number of executors, each with a certain number of cores specified
 by <code>--executor-cores</code>. So, in the above commands, we
@@ -222,6 +208,86 @@ reduce-like transformation, you can optionally specify the number of
 partitions (or Spark applies a default) &mdash; in this case, the
 number of partitions is equal to the number of reducers.</p>
 
+<h4 style="padding-top: 10px">PMI</h4>
+
+<p>Your starting points for PMI computations in Spark should be your
+solutions to assignment 1.  Write two programs, <code>PairsPMI</code>
+and <code>StripesPMI</code> that go in
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>,
+in <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>.</p>
+
+<p>There are obviously going to be differences in the MapReduce and
+Spark implementations, but we want you to preserve the "spirit" of the
+"pairs" vs. "stripes" approach in your respective
+implementations. That is, the pairs implementation keeps track of each
+co-occurring counts independently, while the stripes implementation
+groups all co-occurring terms with respect to a term. If you have
+questions, please ask.</p>
+
+<p>We are going to run your code in the Linux student CS environment
+as follows (we will make sure the collection is there):</p>
+
+<pre>
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.PairsPMI \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
+   --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5
+
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
+   --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5
+</pre>
+
+<p>We are going to run your code on the Altiscale cluster as follows
+(we will make sure the collection is there):</p>
+
+<pre>
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.PairsPMI \
+   --num-executors 5 --executor-cores 2 --executor-memory 2G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+   --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5
+
+$ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
+   --num-executors 5 --executor-cores 2 --executor-memory 2G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+    --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5
+</pre>
+
+<p>Note that we're only going to test your program on the Shakespeare
+collection in both environments. Due to some of the reasons we
+discussed in class, Spark is actually slower than MapReduce for this
+particular application. The implementations run fine on Spark, except
+that it just takes too long to be worth the time spent for this
+assignment.</p>
+
+<p>Hints:</p>
+
+<ul>
+  <li>Use broadcast variables.</li>
+  <li>Spark accumulators may be helpful</li>
+</ul>
+
+<h4 style="padding-top: 10px">Turning in the Assignment</h4>
+
+<p>Please follow these instructions carefully!</p>
+
+<p>All implementations should be in
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment2</code>; your
+Scala code should be
+in <code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment2/</code>.
+There are no questions to answer in this assignment unless there is
+something you would like to communicate with us, and if so, put it
+in <code>assignment2.md</code>.</p>
+
+<p>When grading, we will pull your repo and build your code:<p>
+
+<pre>
+$ mvn clean package
+</pre>
+
+<p>And run using exactly the commands above. Make sure that your code
+runs in the Linux Student CS environment (even if you do development
+on your own machine), which is where we will be doing the
+grading. "But it runs on my laptop!" will not be accepted as an excuse
+if we can't get your code to run.</p>
+
 <p>When you've done everything, commit to your repo and remember to
 push back to origin. You should be able to see your edits in the web
 interface. Before you consider the assignment "complete", we would
@@ -232,13 +298,25 @@ clone of your repo and going through the steps above.</p>
 
 <h4 style="padding-top: 10px">Grading</h4>
 
-<p>This assignment is worth a total of 24 points, broken down as
+<p>This assignment is worth a total of 40 points, broken down as
 follows:</p>
 
 <ul>
-  <li>The pairs implementation running locally is worth 6 points; the stripes implementation running locally is worth another 6 points.</li>
-  <li>The pairs implementation running on Altiscale is worth 6 points; the stripes implementation running on Altiscale is worth another 6 points.</li>
+
+  <li>The bigram relative frequency implementations are worth 20
+  points total, 5 point for each of the following conditions: pairs on
+  Linux Student CS, pairs on Altiscale, stripes on Linux Student CS,
+  stripes on Altiscale.</li>
+
+  <li>The PMI implementations are worth 20 points total, 5 point for
+  each of the following conditions: pairs on Linux Student CS, pairs
+  on Altiscale, stripes on Linux Student CS, stripes on
+  Altiscale.</li>
+
 </ul>
+
+<p>There are no points explicitly for hidden test cases: the points
+are folded into the distribution above.</p>
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
 </div>
