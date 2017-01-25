@@ -179,6 +179,9 @@ $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRel
 <p><b>Important:</b> Make sure that your code accepts the command-line
 parameters above!<p>
 
+<p>In order to be able to test your code, the output formats Bigram should match the bespin implementation.
+e.g. for pairs: (a, b), frequency and for stripes: a {b=f1, c= f2,..}.</p>
+
 <p>When you run a Spark job (in distributed mode), you need to specify how much cluster
 resource to request. The option <code>--num-executors</code> specifies
 the number of executors, each with a certain number of cores specified
@@ -230,11 +233,11 @@ as follows (we will make sure the collection is there):</p>
 <pre>
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.PairsPMI \
    target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
-   --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5
+   --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5 --threshold 10
 
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
    target/bigdata2017w-0.1.0-SNAPSHOT.jar --input data/Shakespeare.txt \
-   --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5
+   --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5 --threshold 10
 </pre>
 
 <p>We are going to run your code on the Altiscale cluster as follows
@@ -243,12 +246,15 @@ $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
 <pre>
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.PairsPMI \
    --num-executors 5 --executor-cores 2 --executor-memory 2G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
-   --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5
+   --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-pairs --reducers 5 --threshold 10
 
 $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
    --num-executors 5 --executor-cores 2 --executor-memory 2G target/bigdata2017w-0.1.0-SNAPSHOT.jar \
-    --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5
+    --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5 --threshold 10
 </pre>
+
+<p>In order to be able to test your code, the output formats for PMI should match the output format of the pairs and the
+stripes implementation in A1. e.g. for PMI-pairs: (A,B) (pmi,count) and for PMI-stripes: A {B=(pmi,count), ...}.</p>
 
 <p>Note that we're only going to test your program on the Shakespeare
 collection in both environments. Due to some of the reasons we
