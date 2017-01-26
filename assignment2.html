@@ -179,9 +179,9 @@ $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.ComputeBigramRel
 <p><b>Important:</b> Make sure that your code accepts the command-line
 parameters above!<p>
 
-<p>In order to be able to test your code, the output formats Bigram should match the bespin implementation.
-e.g. for pairs: (a, b) frequency and for stripes: a {b=f1, c= f2,..}.</p>
-<p>Example Bigrams pairs:</p>
+<p>In order for us to test your code easily, your output format should
+match the Bespin implementation. For example, pairs:</p>
+
 <pre>
 (abatement, and) 0.33333334
 (abatement, of) 0.33333334
@@ -190,7 +190,8 @@ e.g. for pairs: (a, b) frequency and for stripes: a {b=f1, c= f2,..}.</p>
 (abbeys, and) 1.0
 </pre>
 
-<p>Example Bigrams stripes:</p>
+<p>And stripes:</p>
+
 <pre>
 tediously       {as=0.5, away=0.5}
 tediousness     {and=0.33333334, on=0.33333334, the=0.33333334}
@@ -198,7 +199,6 @@ teem    {with=1.0}
 teeming {foison=0.2, autumn=0.2, earth=0.2, date=0.2, womb=0.2}
 teems   {a=0.5, and=0.5}
 </pre>
-
 
 <p>When you run a Spark job (in distributed mode), you need to specify how much cluster
 resource to request. The option <code>--num-executors</code> specifies
@@ -271,10 +271,9 @@ $ spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment2.StripesPMI \
     --input data/Shakespeare.txt --output cs489-2017w-lintool-a2-shakespeare-pmi-stripes --reducers 5 --threshold 10
 </pre>
 
-<p>In order to be able to test your code, the output formats for PMI should match the output format of the pairs and the
-stripes implementation in A1. e.g. for PMI-pairs: (A,B) (pmi,count) and for PMI-stripes: A {B=(pmi,count), ...}.</p>
+<p>In order for us to test your code easily, your output format should
+match the PMI output format in assignment 1. For example, pairs:
 
-<p>Example PMI pairs:</p>
 <pre>
 (dog,i) (0.199168526738275,45)
 (away,hast) (0.4904565129278806,12)
@@ -283,9 +282,9 @@ stripes implementation in A1. e.g. for PMI-pairs: (A,B) (pmi,count) and for PMI-
 (didst,it) (0.12058896852870811,14)
 </pre>
 
-<p>Example PMI stripes:</p>
+<p>And stripes:</p>
+
 <pre>
-bone {}
 taste {of=(0.544128151962132,38),to=(0.21306001746430425,19),and=(0.025100051480720503,17),a=(0.10624266601685242,11),in=(0.201968418228328,11),the=(0.19748119320289734,25)}
 smooth {and=(0.39671112143040893,18)}
 </pre>
