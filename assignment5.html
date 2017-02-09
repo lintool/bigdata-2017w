@@ -137,12 +137,10 @@ accompanied by a written description of what the query does; if there
 are any ambiguities in the language, you can always assume that the
 SQL query is correct. Each of your query will be a separate Spark
 program. Put your code in the package
-<code>ca.uwaterloo.cs.bigdata2016w.lintool.assignment5</code>, in the
+<code>ca.uwaterloo.cs.bigdata2017w.assignment5</code>, in the
 same repo that you've been working in all semester. Since you'll be
 writing Scala code, your source files should go into
-<code>src/main/scala/ca/uwaterloo/cs/bigdata2016w/lintool/assignment5/</code>.
-Obviously, replace <code>lintool</code> with your actual GitHub
-username.</p>
+<code>src/main/scala/ca/uwaterloo/cs/bigdata2017w/assignment5/</code>.</p>
 
 <p><b>Q1:</b> How many items were shipped on a particular date? This corresponds to the following SQL query:
 
@@ -154,8 +152,8 @@ select count(*) from lineitem where l_shipdate = 'YYYY-MM-DD';
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q1 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q1 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -197,8 +195,8 @@ order by o_orderkey asc limit 20;
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q2 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q2 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -238,8 +236,8 @@ order by l_orderkey asc limit 20;
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q3 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q3 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -280,8 +278,8 @@ order by n_nationkey asc;
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q4 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q4 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -312,8 +310,8 @@ Generate this graph for your boss.</p>
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q5 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q5 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT
 </pre>
 
 <p>the raw data necessary for the graph will be printed to stdout (on the
@@ -351,8 +349,8 @@ group by l_returnflag, l_linestatus;
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q6 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q6 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -398,8 +396,8 @@ limit 10;
 command:</p>
 
 <pre>
-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q7 \
-   target/bigdata2016w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
+spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q7 \
+   target/bigdata2017w-0.1.0-SNAPSHOT.jar --input TPC-H-0.1-TXT --date '1996-01-01'
 </pre>
 
 <p>the answer to the above SQL query will be printed to stdout (on the
@@ -426,8 +424,8 @@ seven queries above run correctly on this larger dataset.</p>
 command-line parameters (same for Q1-Q7):</p>
 
 <pre>
-my-spark-submit --class ca.uwaterloo.cs.bigdata2016w.lintool.assignment5.Q1 --num-executors 10 --driver-memory 2g --executor-memory 2G \
- target/bigdata2016w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT --date '1996-01-01'
+my-spark-submit --class ca.uwaterloo.cs.bigdata2017w.lintool.assignment5.Q1 --num-executors 10 --driver-memory 2g --executor-memory 2G \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT --date '1996-01-01'
 </pre>
 
 <p>In this configuration, your programs shouldn't take more than a
@@ -449,18 +447,18 @@ an arbitrary cluster node, making stdout not directly visible.</p>
 <ul>
 
 <li>Optional: put anything that you want to convey to us about your
-implementation in <code>bigdata2016w/assignment5.md</code>.</li>
+implementation in <code>bigdata2017w/assignment5.md</code>.</li>
 
 <li>Two files,
-named <code>bigdata2016w/assignment5-Q5-small.pdf</code>
-and <code>bigdata2016w/assignment5-Q5-large.pdf</code> that contains
+named <code>bigdata2017w/assignment5-Q5-small.pdf</code>
+and <code>bigdata2017w/assignment5-Q5-large.pdf</code> that contains
 the graphs for Q5 on the <code>TPC-H-0.1-TXT</code>
 and <code>TPC-H-10-TXT</code> datasets, respectively. If you cannot
 easily generate PDFs, the files should be some easily-viewable format,
 e.g., <code>png</code>, <code>gif</code>, etc.</li>
 
 <li>Your implementations for the queries should be in
-package <code>ca.uwaterloo.cs.bigdata2016w.lintool.assignment5</code>. There
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment5</code>. There
 should be at the minimum seven classes (Q1-Q7), but you may include
 helper classes as you see fit.</li>
 
