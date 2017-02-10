@@ -21,59 +21,59 @@ def check_a5(u):
     """Run assignment5 in AltiScale environment"""
     call(["mvn","clean","package"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
 	   "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g",	
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "my-spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
        "--num-executors", "10", "--driver-memory", "2g", "--executor-memory", "2g", 
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "/shared/cs489/data/TPC-H-10-PARQUET", "--date", "1996-01-01", "--parquet"])
 
