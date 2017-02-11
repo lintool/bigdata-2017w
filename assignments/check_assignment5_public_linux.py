@@ -24,7 +24,7 @@ def check_a5(u):
     call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
  	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
 
-   call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
+    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
        "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
     call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
