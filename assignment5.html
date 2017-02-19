@@ -81,11 +81,6 @@
 
 <h3>Assignment 5: Data Warehousing <small>due 8:30am March 2</small></h3>
 
-<p><b>Note:</b> This assignment is a draft and incomplete. If you
-begin working on this assignment, be aware that parts can still
-change. This message will be removed once the assignment is
-complete.</p>
-
 <p>In this assignment you'll be hand-crafting Spark programs that
 implement SQL queries in a data warehousing scenario. Various
 SQL-on-Hadoop solutions share in providing an SQL query interface on
@@ -154,7 +149,7 @@ Parquet data. More details will be provided below.</p>
 
 <p>Each SQL query is accompanied by a written description of what the
 query does.; if there are any ambiguities in the language, you can
-always assume that the SQL query is correct. Each of your query will
+always assume that the SQL query is correct. Your implementation of each query will
 be a separate Spark program. Put your code in the package
 <code>ca.uwaterloo.cs.bigdata2017w.assignment5</code>, in the
 same repo that you've been working in all semester. Since you'll be
@@ -484,27 +479,127 @@ all the optimization opportunities that are available.</p>
 <h4 style="padding-top: 10px">Scaling up on Altiscale</h4>
 
 <p>Once you get your implementation working and debugged in the Linux
-environment, run your code on a larger TCP-H dataset, located on HDFS
-at <code>/shared/cs489/data/TPC-H-10-TXT</code>. Make sure that all
-seven queries above run correctly on this larger dataset.</p>
+environment, run your code on a larger TCP-H dataset, located on HDFS:
 
-<p>On the Altiscale cluster, we will run your code with the following
-command-line parameters (same for Q1-Q7):</p>
+<ul>
+
+<li><code>/shared/cs489/data/TPC-H-10-TXT</code> for the plain-text data</li>
+<li><code>/shared/cs489/data/TPC-H-10-PARQUET</code> for the Parquet data</li>
+
+</ul>
+
+<p>Make sure that all seven queries above run correctly on this larger
+dataset. For your reference, the the command-line parameters
+for Q1-Q7 are provided below (so you can copy and paste).</p>
+
+<p><b>Important:</b> Note that for this assignment we are using a
+custom Spark submit script <code>a5-spark-submit</code> (which should
+already be on your path). The difference in this submit script is that
+we set <code>--deploy-mode client</code>. This will force the driver
+to run on the client (i.e., workspace), so that you will see the
+output of <code>println</code>. Otherwise, the driver will run on an
+arbitrary cluster node, making stdout not directly visible. Also, we
+redirect stdout to a file so that it'll be easier to view the output.</p>
+
+<p><b>Q1:</b></p>
 
 <pre>
-my-spark-submit --class ca.uwaterloo.cs.bigdata2017w.lintool.assignment5.Q1 --num-executors 10 --driver-memory 2g --executor-memory 2G \
- target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT --date '1996-01-01'
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q1 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q1t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q1 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q1p.out
+</pre>
+
+<p><b>Q2:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q2 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q2t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q2 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q2p.out
+</pre>
+
+<p><b>Q3:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q3 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q3t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q3 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q3p.out
+</pre>
+
+<p><b>Q4:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q4 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q4t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q4 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q4p.out
+</pre>
+
+<p><b>Q5:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q5 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT --text > q5t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q5 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET --parquet > q5p.out
+</pre>
+
+<p><b>Q6:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q6 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q6t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q6 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q6p.out
+</pre>
+
+<p><b>Q7:</b></p>
+
+<pre>
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q7 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-TXT \
+ --date '1996-01-01' --text > q7t.out
+
+a5-spark-submit --class ca.uwaterloo.cs.bigdata2017w.assignment5.Q7 \
+ --num-executors 5 --executor-cores 2 --executor-memory 4G --driver-memory 2g \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/TPC-H-10-PARQUET \
+ --date '1996-01-01' --parquet > q7p.out
 </pre>
 
 <p>In this configuration, your programs shouldn't take more than a
 couple of minutes. If it's taking more than five minutes, you're
 probably doing something wrong.</p>
-
-<p><b>Important:</b> In your <code>my-spark-submit</code> script, make
-sure you set <code>--deploy-mode client</code>. This will force the
-driver to run on the client (i.e., workspace), so that you will see
-the output of <code>println</code>. Otherwise, the driver will run on
-an arbitrary cluster node, making stdout not directly visible.</p>
 
 <h4 style="padding-top: 10px">Turning in the Assignment</h4>
 
@@ -537,7 +632,7 @@ environment on <code>TPC-H-0.1-TXT</code>, and on the Alitscale
 cluster on the <code>TPC-H-10-TXT</code> data.</p>
 
 <p>Specifically, we will clone your repo and use the below check
-scripts: <b>(Note, this check scripts are drafts only, not ready for consumption)</b></p>
+scripts:</p>
 
 <ul>
 
@@ -567,19 +662,22 @@ clone of your repo and run the public check scripts.</p>
   should be "free" points).</li>
 
   <li>For Q1-Q3, each query is worth 10 points: 5 points for a correct
-  implementation that works in the Linux Student CS environment, 5
-  points for a correct implementation that works on the Altiscale
-  cluster.</li>
+  implementation that works in the Linux Student CS environment (both
+  on plain text and Parquet), 5 points for a correct implementation
+  that works on the Altiscale cluster (both on plain text and
+  Parquet).</li>
 
   <li>Q4 and Q5 are each worth 14 points: 7 points for a correct
-  implementation that works in the Linux Student CS environment, 7
-  points for a correct implementation that works on the Altiscale
-  cluster.</li>
+  implementation that works in the Linux Student CS environment (both
+  on plain text and Parquet), 7 points for a correct implementation
+  that works on the Altiscale cluster (both on plain text and
+  Parquet).</li>
 
   <li>Q6 and Q7 are each worth 16 points: 8 points for a correct
-  implementation that works in the Linux Student CS environment, 8
-  points for a correct implementation that works on the Altiscale
-  cluster.</li>
+  implementation that works in the Linux Student CS environment (both
+  on plain text and Parquet), 8 points for a correct implementation
+  that works on the Altiscale cluster (both on plain text and
+  Parquet).</li>
 
 </ul>
 
