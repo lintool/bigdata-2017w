@@ -13,62 +13,57 @@ import os
 from subprocess import call
 import re
 
-# add prefix 'a' if github-username starts from a numeric character
-def convertusername(u):
-  return re.sub(r'^(\d+.*)',r'a\1',u)
-
 def check_a5(u):
     """Run assignment5 in linux environment"""
-    call(["mvn","clean","package"])
+    call(["mvn", "clean", "package"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q1",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q1",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q1",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q2",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q2",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q2",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q3",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q3",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q3",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q4",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
     
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q4",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q4",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q5",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--text"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q5",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q5",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q6",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q6",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q6",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
- 	   "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q7",
+ 	  "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-TXT", "--date", "1996-01-01", "--text"])
     
-    call([ "spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w."+u+".assignment5.Q7",
-       "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
+    call(["spark-submit", "--class", "ca.uwaterloo.cs.bigdata2017w.assignment5.Q7",
+          "target/bigdata2017w-0.1.0-SNAPSHOT.jar", "--input", "TPC-H-0.1-PARQUET", "--date", "1996-01-01", "--parquet"])
 
 if __name__ == "__main__":
   try:
     if len(sys.argv) < 2:
         print "usage: "+sys.argv[0]+" [github-username]"
         exit(1)
-    u = convertusername(sys.argv[1])
-    check_a5(u)
+    check_a5(sys.argv[1])
   except Exception as e:
     print(e)
