@@ -93,7 +93,8 @@ be given a series of SQL queries, and for each you'll have to
 hand-craft a Spark program that corresponds to each query.</p>
 
 <p><b>Important:</b> You are not allowed to use the Dataframe API or
-Spark SQL to complete this assignment. You must write code to manipulate raw RDDs.
+Spark SQL to complete this assignment (with the exception of loading Parquet files, see "hints" below). 
+You must write code to manipulate raw RDDs.
 Furthermore, you are not allowed to use <code>join</code> and
 closely-related transformations in Spark for this assignment, because
 otherwise it defeats the point of the exercise. The assignment will
@@ -651,6 +652,27 @@ recommend that you verify everything above works by performing a clean
 clone of your repo and run the public check scripts.</p>
 
 <p>That's it!</p>
+
+<h4 style="padding-top: 10px">Hints</h4>
+
+<p>The easiest way to read Parquet is to use the Dataframe API, as
+follows:</p>
+
+<pre>
+import org.apache.spark.sql.SparkSession
+
+val sparkSession = SparkSession.builder.getOrCreate
+
+val lineitemDF = sparkSession.read.parquet("TPC-H-0.1-PARQUET/lineitem")
+val lineitemRDD = lineitemDF.rdd
+</pre>
+
+<p>Once you read in the table as as dataframe, convert it into an RDD
+and work from there.</p>
+
+<p>You are not allowed to use Spark SQL in your implementations for
+this assignment, but I have no problem if you use Spark SQL
+to <i>check</i> your answers.</p>
 
 <h4 style="padding-top: 10px">Grading</h4>
 
