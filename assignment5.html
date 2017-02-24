@@ -670,6 +670,17 @@ val lineitemRDD = lineitemDF.rdd
 <p>Once you read in the table as as dataframe, convert it into an RDD
 and work from there.</p>
 
+<p>To use the above features, you'll need to add the following
+dependency to your <code>pom.xml</code>:</p>
+
+<pre>
+&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+  &lt;artifactId&gt;spark-sql_2.11&lt;/artifactId&gt;
+  &lt;version&gt;${spark.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
 <p>You are not allowed to use Spark SQL in your implementations for
 this assignment, but I have no problem if you use Spark SQL
 to <i>check</i> your answers.</p>
