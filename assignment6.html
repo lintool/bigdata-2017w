@@ -81,11 +81,6 @@
 
 <h3>Assignment 6: Spam Classification <small>due 1:00pm March 16</small></h3>
 
-<p><b>Note:</b> This assignment is a draft and incomplete. If you
-begin working on this assignment, be aware that parts can still
-hange. This message will be removed once the assignment is
-complete.</p>
-
 <p>In this assignment, you will build a spam classifier trained using
 stochastic gradient descent in Spark, replicating the work described
 in <a href="http://arxiv.org/abs/1004.5168">Efficient and Effective
@@ -96,7 +91,7 @@ should read the entire paper for background.</p>
 
 <h4 style="padding-top: 10px">Downloading Data</h4>
 
-<p>First let's grab the training and test data:</p>
+<p>If you're working on your laptop, grab the training and test data:</p>
 
 <pre>
 wget https://www.student.cs.uwaterloo.ca/~cs489/spam/spam.train.group_x.txt.bz2
@@ -104,6 +99,9 @@ wget https://www.student.cs.uwaterloo.ca/~cs489/spam/spam.train.group_y.txt.bz2
 wget https://www.student.cs.uwaterloo.ca/~cs489/spam/spam.train.britney.txt.bz2
 wget https://www.student.cs.uwaterloo.ca/~cs489/spam/spam.test.qrels.txt.bz2
 </pre>
+
+<p>Otherwise, the datasets are at <code>/u0/cs489/public_html/spam</code> in the 
+Linux Student CS environment.</p>
 
 <p>Just to verify what you've downloaded:</p>
 
@@ -511,7 +509,134 @@ below (see Altiscale section).</p>
 
 <h4 style="padding-top: 10px">Running on Altiscale</h4>
 
-<p>TBA. This portion of the assignment is not yet complete.</p>
+<p>You are free to develop locally on your own machine or in the Linux
+Student CS environment (and in fact, the instructions above assume
+so), but you must make sure that your code runs in Altiscale
+also. This is just to verify that your Spark programs will work in a
+distributed environment, and that you are not inadvertently taking
+advantage of some local feature.</p>
+
+<p>All training and test data are located
+in <code>/shared/cs489/data/</code> on HDFS. Note that
+<code>spam.train.all.txt</code> has already been prepared for you in
+that directory also.</p>
+
+<p>For example, training, predicting, and evaluating on
+the <code>group_x</code> dataset in Altiscale:</p>
+
+<pre>
+spark-submit --driver-memory 2g --class ca.uwaterloo.cs.bigdata2017w.assignment6.TrainSpamClassifier \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/spam.train.group_x.txt \
+ --model cs489-2017w-lintool-a6-model-group_x
+
+spark-submit --driver-memory 2g --class ca.uwaterloo.cs.bigdata2017w.assignment6.ApplySpamClassifier \
+ target/bigdata2017w-0.1.0-SNAPSHOT.jar --input /shared/cs489/data/spam.test.qrels.txt \
+ --output cs489-2017w-lintool-a6-test-group_x --model cs489-2017w-lintool-a6-model-group_x
+
+./spam_eval_hdfs.sh cs489-2017w-lintool-a6-test-group_x
+</pre>
+
+<p>The major differences are:</p>
+
+<ul>
+  <li>Location of the training/test data (on HDFS).</li>
+  <li>All input/output from/to HDFS.</li>
+  <li>Use of <code>spam_eval_hdfs.sh</code> for the evaluation script.</li>
+</ul>
+
+<p>Refer back to the placeholders above and answer the following
+questions, <i>running your code on the Altiscale cluster</i>:</p>
+
+<p><b>Question 1:</b> For each individual classifiers trained
+on <code>group_x</code>, <code>group_y</code>,
+and <code>britney</code>, what are the 1-ROCA% scores? You should be
+able to replicate our results
+on <code>group_x</code>, <code>group_y</code>, but there may be some
+non-determinism for <code>britney</code>, which is why we want you to
+report the figures.</p>
+
+<p><b>Question 2:</b> What is the 1-ROCA% score of the score averaging
+technique in the 3-classifier ensemble?</p>
+
+<p><b>Question 3:</b> What is the 1-ROCA% score of the voting
+technique in the 3-classifier ensemble?</p>
+
+<p><b>Question 4:</b> What is the 1-ROCA% score of a single classifier
+trained on all available training data concatenated together?</p>
+
+<p><b>Question 5:</b> Run the shuffle trainer 10 times on
+the <code>britney</code> dataset, predict and evaluate the classifier
+on the test data each time. Report the 1-ROCA% score in each of the
+ten trials and compute the overall average.</p>
+
+<h4 style="padding-top: 10px">Turning in the Assignment</h4>
+
+<p>Please follow these instructions carefully!</p>
+
+<p>Make sure your repo has the following items:</p>
+
+<ul>
+
+<li>Put the answers to all the questions above
+in <code>bigdata2017w/assignment6.md</code>.</li>
+
+<li>Your implementations should go in
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment6</code>. At the minimum, you should have
+<code>TrainSpamClassifier</code>, <code>ApplySpamClassifier</code>,
+and <code>ApplyEnsembleSpamClassifier</code>. Feel free to include helper code also.</li>
+
+</ul>
+
+<p>Make sure your implementation runs on the Altiscale cluster. The
+following check script is provided for you (check the source for the relevant flags):</p>
+
+<ul>
+
+<li><a href="assignments/check_assignment6_public.py"><code>check_assignment6_public.py</code></a></li>
+
+
+</ul>
+
+<p>When you've done everything, commit to your repo and remember to
+push back to origin. You should be able to see your edits in the web
+interface. Before you consider the assignment "complete", we would
+recommend that you verify everything above works by performing a clean
+clone of your repo and run the public check scripts.</p>
+
+<p>That's it!</p>
+
+<h4 style="padding-top: 10px">Grading</h4>
+
+<p>The entire assignment is worth 60 points:</p>
+
+<ul>
+
+  <li>Getting your code to compile is worth 4 points.</li>
+
+  <li>A correct implementation of the
+  basic <code>TrainSpamClassifier</code> is worth 15 points.</li>
+
+  <li>A correct implementation of <code>ApplySpamClassifier</code> is
+  worth 5 points.</li>
+
+  <li>A correct implementation
+  of <code>ApplyEnsembleSpamClassifier</code> is worth 6 points.</li>
+
+  <li>A correct implementation of the <code>--shuffle</code> option
+  in <code>TrainSpamClassifier</code> is worth 5 points.</li>
+
+  <li>The answers to questions 1-5 are worth 3 points each.</li>
+
+  <li>Being able to successfully run all your code on Altiscale is
+  worth 10 points. We will begin by testing all your code on
+  Altiscale. If everything works there, you will get full marks. If we
+  can't get your code to run successfully on Altiscale, we will try
+  running your code in the Linux Student CS environment, as part of
+  confirming that the implementations above are correct. However, if
+  your code works in the Linux Student CS environment but not on
+  Altiscale, you will still receive zero marks for this item.</li>
+
+</ul>
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
 </div>
