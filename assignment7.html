@@ -133,7 +133,7 @@ programs. Running <code>HBaseWordCount</code>:</p>
 
 <pre>
 hadoop jar target/bespin-0.1.0-SNAPSHOT.jar io.bespin.java.mapreduce.wordcount.HBaseWordCount \
- -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+ -config /u0/cs489/hbase-site.xml \
  -input data/Shakespeare.txt -table lintool-wc-shakes -reducers 5
 </pre>
 
@@ -152,7 +152,7 @@ table name, per above.</p>
 
 <pre>
 hadoop jar target/bespin-0.1.0-SNAPSHOT.jar io.bespin.java.mapreduce.wordcount.HBaseWordCountFetch \
- -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+ -config /u0/cs489/hbase-site.xml \
  -table lintool-wc-shakes -term love
 </pre>
 
@@ -166,12 +166,70 @@ everything should go into the package namespace
 <code>ca.uwaterloo.cs.bigdata2017w.assignment7</code>. Note we're back
 to coding in Java for this assignment.</p>
 
-<p>You will write two programs, <code>BuildInvertedIndexHBase</code>
-and <code>BooleanRetrievalHBase</code>. These are the counterparts of
-the programs you wrote in assignment 3 (and the original Bespin
-demos); feel free to use your code there as a starting point. Note
-that you don't need to worry about index compression for this
-assignment!</p>
+<p>You will write three programs: <code>BuildInvertedIndexHBase</code>,
+<code>InsertCollectionHBase</code>,
+and <code>BooleanRetrievalHBase</code>. Feel free to use your code
+from assignment 3 a starting point. Note that you don't need to worry
+about index compression for this assignment!</p>
+
+<p>The <code>BuildInvertedIndexHBase</code> program is the HBase
+version of <code>BuildInvertedIndex</code> from the Bespin
+demo. Instead of writing the index to HDFS, you will write the index
+to an HBase table. Use the following table structure: the term will be
+the row key. Your table will have a single column family called
+"p". In the column family, each document id will be a column
+qualifier. The value will be the term frequency.</p>
+
+<p>We will run your code as follows:</p>
+
+<pre>
+hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+  ca.uwaterloo.cs.bigdata2017w.assignment7.BuildInvertedIndexHBase \
+  -config /u0/cs489/hbase-site.xml \
+  -input data/Shakespeare.txt \
+  -table cs489-2017w-lintool-a7-index-shakespeare -reducers 4
+</pre>
+
+<p>The <code>InsertCollectionHBase</code> program will insert the
+collection into HBase, where the row key is the long offset of each
+line, what we've been using as the document id. The simplest
+implementation is to use an identity mapper and insert into HBase in
+the reducers.</p>
+
+<p>We will run your code as follows:</p>
+
+<pre>
+hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+  ca.uwaterloo.cs.bigdata2017w.assignment7.InsertCollectionHBase \
+  -config /u0/cs489/hbase-site.xml \
+  -input data/Shakespeare.txt \
+  -table cs489-2017w-lintool-a7-collection-shakespeare -reducers 4
+</pre>
+
+<p>The <code>BooleanRetrievalHBase</code> program is the HBase version
+of <code>BooleanRetrieval</code> from the Bespin demo. This program
+should read postings and documents from HBase.</p>
+
+<p>We will run your code as follows:</p>
+
+<pre>
+hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+  ca.uwaterloo.cs.bigdata2017w.assignment7.BooleanRetrievalHBase \
+  -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+  -index cs489-2017w-lintool-a7-index-shakespeare \
+  -collection cs489-2017w-lintool-a7-collection-shakespeare \
+  -query "outrageous fortune AND"
+</pre>
+
+<p>Note that <code>-index</code> and <code>-collection</code> specify
+HBase tables (the result of <code>BuildInvertedIndexHBase</code> and
+<code>InsertCollectionHBase</code>, respectively). You should verify
+that all the sample queries (from assignment 3) on both collections
+work.</p>
+
+<h4 style="padding-top: 10px">Search API Endpoint</h4>
+
+
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
 </div>
