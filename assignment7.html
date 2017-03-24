@@ -78,8 +78,100 @@
 
 <section style="padding-top:0px">
 <div>
-<h3>Assignment 7</h3>
+<h3>Assignment 7: Inverted Indexing (Redux) <small>due 1:00pm April 3</small></h3>
 
+<p><b>Note:</b> This assignment is a draft and incomplete. If you
+begin working on this assignment, be aware that parts can still
+hange. This message will be removed once the assignment is
+complete.</p>
+
+<p>In this assignment you'll revisit the inverted indexing and boolean
+retrieval program in <a href="assignment3.html">assignment 3</a>. In
+assignment 3, your indexer program wrote postings to HDFS
+in <code>MapFile</code>s and your boolean retrieval program read
+postings from those <code>MapFile</code>s. In this assignment, you'll
+write postings to and read postings from HBase instead. In other
+words, the program logic should not change, except for the backend
+storage that you are using. This assignment is to be completed using
+MapReduce in Java.</p>
+
+<p>Due to the complexities of setting up HBase in Altiscale, this
+assignment will be completed entirely in the Linux Student CS
+Environment, where we have stood up a single-node HBase cluster. Check
+out <a href="http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status"><code>http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status</code></a>. As
+a result, you won't be able to play with HBase on sizeable
+collections, although the assignment will still give you some
+experience of what developing against HBase "feels like".</p>
+
+<p>For this assignment ssh
+into <code>ubuntu1404-010.student.cs.uwaterloo.ca</code> and work
+specifically on that host.</p>
+
+<h4 style="padding-top: 10px">HBase Word Count</h4>
+
+<p>To start, pull the Bespin repo and make sure you have the latest
+version of the code. Take a look at <code>HBaseWordCount</code> in
+package <code>io.bespin.java.mapreduce.wordcount</code>.
+The <code>HBaseWordCount</code> program is like the basic word count
+demo, except that it stores the output in an HBase table. That is, the
+reducer output is directly written to an HBase table: the word serves
+as the row key, "c" is the column family, "count" is the column
+qualifier, and the value is the actual count.</p>
+
+<p>The <code>HBaseWordCountFetch</code> program in the same package
+illustrates how you can fetch these counts out of HBase and shows you
+how to use the basic HBase "get" API.</p>
+
+<p>Study these two programs to make sure you understand how they
+work. The two sample program should give you a good introduction to
+the HBase APIs. A free
+online <a href="https://hbase.apache.org/book.html">HBase
+book</a> is a good source of additional details.</p>
+
+<p>Make sure you can run both
+programs. Running <code>HBaseWordCount</code>:</p>
+
+<pre>
+hadoop jar target/bespin-0.1.0-SNAPSHOT.jar io.bespin.java.mapreduce.wordcount.HBaseWordCount \
+ -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+ -input data/Shakespeare.txt -table lintool-wc-shakes -reducers 5
+</pre>
+
+<p>Use the <code>-config</code> option to specify the HBase config
+file: point to a version on the Altiscale workspace that we've
+prepared for you. This config file tells the program how to connect to
+the HBase cluster. Use the <code>-table</code> option to name the
+table you're inserting the word counts into. The other options should
+be straightforward to understand.</p>
+
+<p><B>Note:</b> Since HBase is a shared resource across the cluster,
+please make your tables unique by using your username as part of the
+table name, per above.</p>
+
+<p>You should then be able to fetch the word counts from HBase:</p>
+
+<pre>
+hadoop jar target/bespin-0.1.0-SNAPSHOT.jar io.bespin.java.mapreduce.wordcount.HBaseWordCountFetch \
+ -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+ -table lintool-wc-shakes -term love
+</pre>
+
+<p>If everything works, you'll discover that the term "love" appears
+2053 times in the Shakespeare collection.</p>
+
+<h4 style="padding-top: 10px">HBase Storage</h4>
+
+<p>Now it's time to write some code! Following past procedures,
+everything should go into the package namespace
+<code>ca.uwaterloo.cs.bigdata2017w.assignment7</code>. Note we're back
+to coding in Java for this assignment.</p>
+
+<p>You will write two programs, <code>BuildInvertedIndexHBase</code>
+and <code>BooleanRetrievalHBase</code>. These are the counterparts of
+the programs you wrote in assignment 3 (and the original Bespin
+demos); feel free to use your code there as a starting point. Note
+that you don't need to worry about index compression for this
+assignment!</p>
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
 </div>
