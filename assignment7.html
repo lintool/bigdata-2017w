@@ -80,30 +80,29 @@
 <div>
 <h3>Assignment 7: Inverted Indexing (Redux) <small>due 1:00pm April 3</small></h3>
 
-<p><b>Note:</b> This assignment is a draft and incomplete. If you
-begin working on this assignment, be aware that parts can still
-hange. This message will be removed once the assignment is
-complete.</p>
-
 <p>In this assignment you'll revisit the inverted indexing and boolean
 retrieval program in <a href="assignment3.html">assignment 3</a>. In
 assignment 3, your indexer program wrote postings to HDFS
 in <code>MapFile</code>s and your boolean retrieval program read
 postings from those <code>MapFile</code>s. In this assignment, you'll
 write postings to and read postings from HBase instead. In other
-words, the program logic should not change, except for the backend
+words, the core program logic should not change, except for the backend
 storage that you are using. This assignment is to be completed using
 MapReduce in Java.</p>
 
-<p>Due to the complexities of setting up HBase in Altiscale, this
-assignment will be completed entirely in the Linux Student CS
-Environment, where we have stood up a single-node HBase cluster. Check
-out <a href="http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status"><code>http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status</code></a>. As
-a result, you won't be able to play with HBase on sizeable
-collections, although the assignment will still give you some
-experience of what developing against HBase "feels like".</p>
+<p><b>Note</b>: Due to the complexities of setting up HBase in
+Altiscale, we have not been able to stand up an HBase cluster yet. For
+now, work in the Linux Student CS environment (more details below). If
+we manage to get a stable HBase cluster running on Altiscale, you will
+complete the Altiscale portion of the assignment; otherwise, you will
+not be responsible for getting code to run on Altiscale.</p>
 
-<p>For this assignment ssh
+<p>We have stood up a single-node HBase cluster in the Linux Student
+CS environment. Check
+out <a href="http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status"><code>http://ubuntu1404-010.student.cs.uwaterloo.ca:16010/master-status</code></a>. You
+won't be able to play with HBase on sizeable collections, although the
+assignment will still give you some experience of what developing
+against HBase "feels like". For this assignment ssh
 into <code>ubuntu1404-010.student.cs.uwaterloo.ca</code> and work
 specifically on that host.</p>
 
@@ -138,15 +137,15 @@ hadoop jar target/bespin-0.1.0-SNAPSHOT.jar io.bespin.java.mapreduce.wordcount.H
 </pre>
 
 <p>Use the <code>-config</code> option to specify the HBase config
-file: point to a version on the Altiscale workspace that we've
-prepared for you. This config file tells the program how to connect to
-the HBase cluster. Use the <code>-table</code> option to name the
-table you're inserting the word counts into. The other options should
-be straightforward to understand.</p>
+file: point to a version that we've prepared for you. This config file
+tells the program how to connect to the HBase cluster. Use
+the <code>-table</code> option to name the table you're inserting the
+word counts into. The other options should be straightforward to
+understand.</p>
 
-<p><B>Note:</b> Since HBase is a shared resource across the cluster,
-please make your tables unique by using your username as part of the
-table name, per above.</p>
+<p><B>Note:</b> Since HBase is a shared resource, please make your
+tables unique by using your username as part of the table name, per
+above.</p>
 
 <p>You should then be able to fetch the word counts from HBase:</p>
 
@@ -168,9 +167,9 @@ to coding in Java for this assignment.</p>
 
 <p>You will write three programs: <code>BuildInvertedIndexHBase</code>,
 <code>InsertCollectionHBase</code>,
-and <code>BooleanRetrievalHBase</code>. Feel free to use your code
-from assignment 3 a starting point. Note that you don't need to worry
-about index compression for this assignment!</p>
+and <code>BooleanRetrievalHBase</code>. Feel free to use code from
+Bespin or assignment 3 starting points. Note that you don't need to
+worry about index compression for this assignment.</p>
 
 <p>The <code>BuildInvertedIndexHBase</code> program is the HBase
 version of <code>BuildInvertedIndex</code> from the Bespin
@@ -187,8 +186,12 @@ hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
   ca.uwaterloo.cs.bigdata2017w.assignment7.BuildInvertedIndexHBase \
   -config /u0/cs489/hbase-site.xml \
   -input data/Shakespeare.txt \
-  -table cs489-2017w-lintool-a7-index-shakespeare -reducers 4
+  -index cs489-2017w-lintool-a7-index-shakespeare -reducers 4
 </pre>
+
+<p>The <code>-index</code> option specifies the name of the HBase
+table. If it exists already, your program should drop the table and
+recreate it.</p>
 
 <p>The <code>InsertCollectionHBase</code> program will insert the
 collection into HBase, where the row key is the long offset of each
@@ -203,7 +206,7 @@ hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
   ca.uwaterloo.cs.bigdata2017w.assignment7.InsertCollectionHBase \
   -config /u0/cs489/hbase-site.xml \
   -input data/Shakespeare.txt \
-  -table cs489-2017w-lintool-a7-collection-shakespeare -reducers 4
+  -index cs489-2017w-lintool-a7-collection-shakespeare -reducers 4
 </pre>
 
 <p>The <code>BooleanRetrievalHBase</code> program is the HBase version
@@ -215,7 +218,7 @@ should read postings and documents from HBase.</p>
 <pre>
 hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
   ca.uwaterloo.cs.bigdata2017w.assignment7.BooleanRetrievalHBase \
-  -config /Users/jimmylin/workspace/hbase-1.2.4/conf/hbase-site.xml \
+  -config /u0/cs489/hbase-site.xml \
   -index cs489-2017w-lintool-a7-index-shakespeare \
   -collection cs489-2017w-lintool-a7-collection-shakespeare \
   -query "outrageous fortune AND"
@@ -224,11 +227,118 @@ hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
 <p>Note that <code>-index</code> and <code>-collection</code> specify
 HBase tables (the result of <code>BuildInvertedIndexHBase</code> and
 <code>InsertCollectionHBase</code>, respectively). You should verify
-that all the sample queries (from assignment 3) on both collections
-work.</p>
+that all the sample queries (from assignment 3) work. Your output
+should match the output of assignment 3.</p>
 
 <h4 style="padding-top: 10px">Search API Endpoint</h4>
 
+<p>Finally, write a search API REST endpoint in a program
+named <code>HBaseSearchEndpoint</code>, wrapping around
+the <code>BooleanRetrievalHBase</code> program above. We'll start up
+the server as follows:</p>
+
+<pre>
+hadoop jar target/bigdata2017w-0.1.0-SNAPSHOT.jar \
+  ca.uwaterloo.cs.bigdata2017w.assignment7.HBaseSearchEndpoint \
+  -config /u0/cs489/hbase-site.xml \
+  -index cs489-2017w-lintool-a7-index-shakespeare \
+  -collection cs489-2017w-lintool-a7-collection-shakespeare \
+  -port 7890
+</pre>
+
+<p>The <code>-port</code> option specifies the port number that the
+services listen on. When you are testing the server, please use random
+port numbers, because otherwise everyone's service will collide.</p>
+
+<p>The search API endpoint should behave as follows, returning
+JSON.</p>
+
+<pre>
+$ curl http://localhost:7890/search?query=fair+nature+AND
+[
+  {"docid": 425450, "text": "  CELIA. No; when Nature hath made a fair creature, may she not by"},
+  {"docid": 1553567, "text": "    Disguise fair nature with hard-favour'd rage;"},
+  {"docid": 5327159, "text": "  Showing fair nature is both kind and tame;"}
+]
+$ curl http://localhost:7890/search?query=outrageous+fortune+AND
+[
+  {"docid": 1073319, "text": "    The slings and arrows of outrageous fortune"}
+]
+</pre>
+
+<p>The reference solution uses Jetty, but you are welcome to use any
+framework for the service, so long as the API endpoint conforms to the
+behavior above.</p>
+
+<h4 style="padding-top: 10px">Turning in the Assignment</h4>
+
+<p>Please follow these instructions carefully!</p>
+
+<p>Make sure your repo has the following items:</p>
+
+<ul>
+
+<li>If you have any notes you wish to convey to us, put it
+in <code>bigdata2017w/assignment7.md</code>. Otherwise, please create
+an empty file&mdash;following previous assignments, this is where your
+grade with go.</li>
+
+<li>Your implementations should go in
+package <code>ca.uwaterloo.cs.bigdata2017w.assignment7</code>. At the
+minimum, you should have <code>BuildInvertedIndexHBase</code>,
+<code>InsertCollectionHBase</code>, <code>BooleanRetrievalHBase</code>,
+and <code>HBaseSearchEndpoint</code>. Feel free to include helper
+classes also.</li>
+
+</ul>
+
+<p>The following check script is provided for you:</p>
+
+<ul>
+
+<li><a href="assignments/check_assignment7_linux.py"><code>check_assignment7_linux.py</code></a></li>
+
+</ul>
+
+<p>Note that the check script does not check the behavior of your
+search endpoint.</p>
+
+<p>When you've done everything, commit to your repo and remember to
+push back to origin. You should be able to see your edits in the web
+interface. Before you consider the assignment "complete", we would
+recommend that you verify everything above works by performing a clean
+clone of your repo and run the public check scripts.</p>
+
+<p>That's it!</p>
+
+<h4 style="padding-top: 10px">Grading</h4>
+
+<p>The entire assignment is worth 50 points:</p>
+
+<ul>
+
+  <li>The implementation of <code>BuildInvertedIndexHBase</code>,
+  <code>InsertCollectionHBase</code>, <code>BooleanRetrievalHBase</code>,
+  and <code>HBaseSearchEndpoint</code> are each worth 5 points.
+
+  <li>Linux Student CS environment: Getting your code to run on sample
+  queries (the same as the ones in assignment 3) is worth 10
+  points. That is, to earn all 10 points, we should be able to run
+  your code on the Shakespeare collection, following exactly the
+  procedure above.</li>
+
+  <li>Altiscale: Getting your code to run on sample queries (the same
+  as the ones in assignment 3) is worth 10 points. That is, to earn
+  all 10 points, we should be able to run your code on the Wikipedia
+  collection, following exactly the procedure above.</li>
+
+  <li>Another 10 points is allotted to us verifying the behavior and
+  output of your program in ways that we will not tell you. We're
+  giving you the "public" versions of the check scripts; we'll run a
+  "private" version to examine your output further (i.e., think blind
+  test cases).</li>
+
+</ul>
 
 
 <p style="padding-top: 20px"><a href="#">Back to top</a></p>
